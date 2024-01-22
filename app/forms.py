@@ -1,11 +1,41 @@
 # forms.py
 
 from django import forms
-from .models import DocumentType, Component, Category, Document, Location, Package, Document, Location, Package
+from .models import Category, ComponentDocumentLink, Component, DocumentType, Document, Location, LocationType, Package, PurchaseDetail, Purchase, Supplier, StockMovement
 
 class ComponentForm(forms.ModelForm):
     class Meta:
         model = Component
+        fields = '__all__'
+
+class ComponentDocumentLinkForm(forms.ModelForm):
+    class Meta:
+        model = ComponentDocumentLink
+        fields = '__all__'
+
+class LocationTypeForm(forms.ModelForm):
+    class Meta:
+        model = LocationType
+        fields = '__all__'
+
+class PurchaseDetailForm(forms.ModelForm):
+    class Meta:
+        model = PurchaseDetail
+        fields = '__all__'
+
+class PurchaseForm(forms.ModelForm):
+    class Meta:
+        model = Purchase
+        fields = '__all__'
+
+class SupplierForm(forms.ModelForm):
+    class Meta:
+        model = Supplier
+        fields = '__all__'
+
+class StockMovementForm(forms.ModelForm):
+    class Meta:
+        model = StockMovement
         fields = '__all__'
         
 class CategoryForm(forms.ModelForm):
