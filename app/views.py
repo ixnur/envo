@@ -1,14 +1,11 @@
 from django.shortcuts import render, redirect
 from django.views.generic import ListView
 from django.views.decorators.csrf import csrf_exempt
+from django.urls import reverse  
 from django.http import JsonResponse
-from .models import Component
-from .forms import ComponentForm
-
-class ComponentListView(ListView):
-    model = Component
-    template_name = '/home/n/Desktop/en/uygulama/app/templates/home.html'  # Değiştirilecek: Template adınıza göre güncelleyin
-    context_object_name = 'components'
+from .models import Component, Category, Document, Location, Package, Purchase, Supplier, StockMovement
+from .forms import ComponentForm, CategoryForm, DocumentForm, LocationForm, PackageForm, PurchaseForm, SupplierForm, StockMovementForm
+from django.http import HttpResponse
 
 @csrf_exempt
 def save_component(request):
@@ -21,44 +18,49 @@ def save_component(request):
             errors = form.errors.as_json()
             return JsonResponse({'status': 'error', 'errors': errors})
 
-    return JsonResponse({'status': 'error', 'message': 'Invalid request method'})
+    return HttpResponse("Invalid request method", status=400)
+
+
+class ComponentListView(ListView):
+    model = Component
+    template_name = '/home/n/Desktop/en/uygulama/app/templates/home.html'  # Değiştirilecek
+    context_object_name = 'components'
+
 
 def home(request):
-    return render(request, '/home/n/Desktop/en/uygulama/app/templates/home.html')  # Değiştirilecek: Template adınıza göre güncelleyin
+    return render(request, '/home/n/Desktop/en/uygulama/app/templates/home.html')  # Değiştirilecek
 
-
-"""
 def home(request):
-    category = Category.objects.all()
     components = Component.objects.all()
-    componentsdocumentlink = ComponentDocumentLink.objects.all()
-    document = Document.objects.all()
-    documenttype = DocumentType.objects.all()
-    location = Location.objects.all()
-    locationtype = LocationType.objects.all()
-    package = Package.objects.all()
-    purchasedetail = PurchaseDetail.objects.all()
-    purchase = Purchase.objects.all()
-    supplier = Supplier.objects.all()
-    stockmovement = StockMovement.objects.all()
+    categories = Category.objects.all()
+    documents = Document.objects.all()
+    locations = Location.objects.all()
+    packages = Package.objects.all()
+    purchases = Purchase.objects.all()
+    suppliers = Supplier.objects.all()
+    stock_movements = StockMovement.objects.all()
 
     context = {
-        'category': category,
         'components': components,
-        'componentsdocumentlink': componentsdocumentlink,
-        'document': document,
-        'documenttype': documenttype,
-        'location': location,
-        'locationtype': locationtype,
-        'package': package,
-        'purchasedetail': purchasedetail,
-        'purchase': purchase,
-        'supplier': supplier,
-        'stockmovement': stockmovement,
+        'categories': categories,
+        'documents': documents,
+        'locations': locations,
+        'packages': packages,
+        'purchases': purchases,
+        'suppliers': suppliers,
+        'stock_movements': stock_movements,
     }
 
-    return render(request, 'templates/home.html', {'components': components})
-""" 
+    return render(request, 'home.html', context)
+def save_component(request):
+    # Bu fonksiyonun içeriğini buraya ekleyin
+    pass
+
+def delete_component(request, pk):
+    # Bu fonksiyonun içeriğini buraya ekleyin
+    pass
+
+
 """
 def component_list(request):
     components = Component.objects.all()

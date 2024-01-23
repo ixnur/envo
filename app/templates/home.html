@@ -1,157 +1,46 @@
+<!-- home.html -->
+
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>
-        {% load static %}
-        {% block title %} imageUrl=<favicon class="ico"></favicon>{% endblock %}
-    </title>
-    <style>
-        /* (CSS still remains the same) */
-    </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Home</title>
 </head>
 <body>
-    <header>
-        <nav>
-            <a class="navbar-brand" href="{% url 'home' %}">
-                <img class="logo" src="/home/n/Desktop/logo.png" alt="OpenStockMate Logo" height="60" />
-            </a>
-            <ul class="nav-links">
-                <div class="action-buttons">
-                    <!-- Existing action buttons -->
-                </div>
-            </ul>
-        </nav>
-    </header>
-    <div class="table-container">
-        <table class="table" id="productTable">
-            <!-- Table header -->
-            <thead>
-                <!-- ... (same as your existing code) ... -->
-            </thead>
 
-            <!-- Table body -->
-            <tbody>
-                {% for component in components %}
-                <tr>
-                    <!-- Display component details -->
-                    <td>{{ component.model }}</td>
-                    <td>{{ component.description }}</td>
-                    <!-- Add other fields as needed -->
-                    <!-- ... -->
+<h1>Component List</h1>
 
-                    <!-- Stok hücresi -->
-                    <td class="stock-cell">{{ component.stock }}</td>
+<!-- Ekleme Formu -->
+<form method="post" action="{% url 'save_component' %}" id="add-component-form">
+    {% csrf_token %}
+    {{ component_form.as_p }}
+    <button type="submit">Add Component</button>
+</form>
 
-                    <!-- Document link column -->
-                    <td>
-                        {% for document_link in component.componentdocumentlink_set.all %}
-                            <a href="{{ document_link.document.document_path }}" target="_blank">{{ document_link.document.name }}</a><br />
-                        {% endfor %}
-                    </td>
+<!-- Bileşen Listesi -->
+<ul>
+    {% for component in components %}
+        <li>
+            {{ component.model }} - {{ component.description }} - {{ component.category }} - {{ component.package }}  - Stock: {{ component.stock }}
+            <a href="{% url 'delete_component' component.id %}" class="delete-link">Delete</a>
+        </li>
+    {% endfor %}
+</ul>
 
-                    <!-- Other fields -->
-                    <!-- ... -->
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-    <!-- Add Component Popup -->
-    <div id="addcompPopup" class="popup">
-        <div class="popup-content">
-            <h2>Yeni Komponent</h2>
-            <form id="addcompForm">
-                <!-- Form fields -->
-                <label for="model">Model:</label>
-                <input type="text" id="model" name="model" required />
-                <!-- Add other input fields as needed -->
-                <!-- ... -->
+<!-- Diğer modellerin listelenmesi için benzer blokları ekleyebilirsiniz -->
 
-                <!-- Save and Cancel buttons -->
-                <button type="button" id="addcompSaveButton">Save</button>
-                <button type="button" id="addcompCancelButton">Cancel</button>
-            </form>
-        </div>
-    </div>
-    <footer class="footer">
-        <p>&copy;2023@mekatronik.org - Open Stock Mate - Komponent envanter uygulaması.</p>
-    </footer>
-</body>
-</html>
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        // Context menu event listener
-        document.getElementById("productTable").addEventListener("contextmenu", function (event) {
-            event.preventDefault();
-            console.log("Sağ tıklandı");
-        });
-
-        // Stok hücrelerini kontrol etme
-        var stockCells = document.querySelectorAll(".stock-cell");
-        stockCells.forEach(function (cell) {
-            var stock = parseInt(cell.textContent);
-            if (stock < 5) {
-                cell.style.backgroundColor = "red";
-            } else if (stock < 10) {
-                cell.style.backgroundColor = "yellow";
+    // Silme bağlantılarına tıklandığında onay al
+    document.querySelectorAll('.delete-link').forEach(link => {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            if (confirm('Are you sure you want to delete this component?')) {
+                window.location.href = link.getAttribute('href');
             }
         });
-
-        // Add Component Pop-up
-        const addcompButton = document.getElementById("addcompButton");
-        const addcompPopup = document.getElementById("addcompPopup");
-        const addcompSaveButton = document.getElementById("addcompSaveButton");
-        const addcompCancelButton = document.getElementById("addcompCancelButton");
-
-        addcompButton.addEventListener("click", function () {
-            openAddcompPopup();
-        });
-
-        addcompCancelButton.addEventListener("click", function () {
-            closeAddcompPopup();
-        });
-
-        addcompSaveButton.addEventListener("click", function () {
-            saveAddcompData();
-        });
-
-        // Add Component Pop-up fonksiyonları
-        function openAddcompPopup() {
-            addcompPopup.style.display = "block";
-        }
-
-        function closeAddcompPopup() {
-            addcompPopup.style.display = "none";
-        }
-
-        function saveAddcompData() {
-            const model = document.getElementById("model").value;
-            // Diğer giriş alanları için de benzer şekilde değerleri alın
-            // ...
-            const csrftoken = document.querySelector("[name=csrfmiddlewaretoken]").value;
-
-            fetch("/save_component/", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-CSRFToken": csrftoken,
-                },
-                body: JSON.stringify({
-                    model: model,
-                    // Diğer giriş alanlarına göre ekleme yapın
-                    // ...
-                }),
-            })
-                .then((response) => response.json())
-                .then((data) => {
-                    console.log(data);
-                    closeAddcompPopup();
-                })
-                .catch((error) => {
-                    console.error("Error:", error);
-                });
-        }
     });
 </script>
+
+</body>
+</html>

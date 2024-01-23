@@ -1,5 +1,3 @@
-# forms.py
-
 from django import forms
 from .models import Category, ComponentDocumentLink, Component, DocumentType, Document, Location, LocationType, Package, PurchaseDetail, Purchase, Supplier, StockMovement
 
@@ -7,6 +5,35 @@ class ComponentForm(forms.ModelForm):
     class Meta:
         model = Component
         fields = '__all__'
+
+class ComponentForm(forms.ModelForm):
+    class Meta:
+        model = Component
+        fields = '__all__'
+        exclude = ['document_links']
+        widgets = {
+            'name': forms.TextInput(attrs={'class': 'form-control'}),
+            'description': forms.Textarea(attrs={'class': 'form-control'}),
+            'category': forms.Select(attrs={'class': 'form-control'}),
+            'supplier': forms.Select(attrs={'class': 'form-control'}),
+            'location': forms.Select(attrs={'class': 'form-control'}),
+            'package': forms.Select(attrs={'class': 'form-control'}),
+        }
+        labels = {
+            'name': 'Name',
+            'description': 'Description',
+            'category': 'Category',
+            'supplier': 'Supplier',
+            'location': 'Location',
+            'package': 'Package',
+        }
+        help_texts = {
+            'name': 'Enter the name of the component.',
+            'description': 'Enter a description of the component.',
+            'category': 'Select a category for the component.',
+            'supplier': 'Select a supplier for the component.',
+            'location': 'Select a location for the component.',
+        }
 
 class ComponentDocumentLinkForm(forms.ModelForm):
     class Meta:
