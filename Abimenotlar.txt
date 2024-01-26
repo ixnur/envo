@@ -1,0 +1,12 @@
+--çalıştırmadan önce veri tabanı silmelisin 
+-(python3 yada python)
+rm db.sqlite3
+python3 manage.py makemigrations
+python3 manage.py migrate
+
+---Yeni admin oluşturmalısın ki şuanda yok 
+python manage.py createsuperuser
+
+--Şifre sıfırlama (lazım olursa)
+python manage.py changepassword <kullanıcı_adınız>
+
