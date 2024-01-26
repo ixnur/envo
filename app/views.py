@@ -2,6 +2,9 @@ from django.shortcuts import render, get_object_or_404, redirect
 from .models import Component
 from .forms import ComponentForm
 
+def home(request):
+    return render(request, 'home.html')
+
 def component_list(request):
     components = Component.objects.all()
     return render(request, 'inventory/component_list.html', {'components': components})
