@@ -1,0 +1,41 @@
+<!-- component_list.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Component List</title>
+</head>
+<body>
+    <h1>Component List</h1>
+    <table border="1">
+        <tr>
+            <th>Model</th>
+            <th>Description</th>
+            <th>Manufacturer</th>
+            <th>Category</th>
+            <th>Package</th>
+            <th>Location</th>
+            <th>Stock</th>
+            <th>Action</th>
+        </tr>
+        {% for component in components %}
+        <tr>
+            <td>{{ component.model }}</td>
+            <td>{{ component.description }}</td>
+            <td>{{ component.manufacturer }}</td>
+            <td>{{ component.category }}</td>
+            <td>{{ component.package }}</td>
+            <td>{{ component.location }}</td>
+            <td>{{ component.stock }}</td>
+            <td>
+                <a href="{% url 'component_detail' slug=component.slug %}">Detail</a>
+                <a href="{% url 'component_edit' slug=component.slug %}">Edit</a>
+                <a href="{% url 'component_delete' slug=component.slug %}">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+    <a href="{% url 'component_new' %}">Add New Component</a>
+</body>
+</html>

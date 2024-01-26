@@ -1,0 +1,21 @@
+<!-- component_detail.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Component Detail</title>
+</head>
+<body>
+    <h1>Component Detail</h1>
+    <p><strong>Model:</strong> {{ component.model }}</p>
+    <p><strong>Description:</strong> {{ component.description }}</p>
+    <p><strong>Manufacturer:</strong> {{ component.manufacturer }}</p>
+    <p><strong>Category:</strong> {{ component.category }}</p>
+    <p><strong>Package:</strong> {{ component.package }}</p>
+    <p><strong>Location:</strong> {{ component.location }}</p>
+    <p><strong>Stock:</strong> {{ component.stock }}</p>
+    <a href="{% url 'component_edit' slug=component.slug %}">Edit</a>
+    <a href="{% url 'component_list' %}">Back to List</a>
+</body>
+</html>

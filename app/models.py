@@ -1,26 +1,17 @@
 from django.db import models
-import re
 from django.urls import reverse
 from django.utils.text import slugify
-from django.db.models.signals import post_save
-from django.conf import settings
-from django.db.models import Q
-from django.utils import timezone
-from django.db.models import Count
-from django.db.models import Sum
-
-# Create your models here.
 
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
     description = models.CharField(max_length=500, blank=True, null=True)
     parent_id = models.ForeignKey('self', blank=True, null=True, on_delete=models.SET_NULL)
     slug = models.SlugField(unique=True)
-    
+
 class ComponentDocumentLink(models.Model):
     document = models.ForeignKey('Document', on_delete=models.CASCADE)
     component = models.ForeignKey('Component', on_delete=models.CASCADE)
-#asılbağlantı 
+
 class Component(models.Model):
     model = models.CharField(max_length=100)
     description = models.CharField(max_length=500, blank=True, null=True)
@@ -28,22 +19,21 @@ class Component(models.Model):
     category = models.ForeignKey('Category', on_delete=models.CASCADE)
     package = models.ForeignKey('Package', on_delete=models.CASCADE)
     location = models.ForeignKey('Location', on_delete=models.CASCADE)
-    stock = models.IntegerField(default=0) 
+    stock = models.IntegerField(default=0)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
     slug = models.SlugField(unique=True)
-    
+
     def get_user_components(user):
         return Component.objects.filter(user=user)
-    
+
     def save(self, *args, **kwargs):
         self.slug = slugify(self.model)
         super().save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse('component_detail', args=[str(self.slug)])
-    
-    
+
 class DocumentType(models.Model):
     name = models.CharField(max_length=100)
 
