@@ -1,6 +1,8 @@
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
+import time
+
 
 class Category(models.Model):
     name = models.CharField(max_length=100, unique=True)
@@ -44,6 +46,10 @@ class Document(models.Model):
     description = models.CharField(max_length=500, blank=True, null=True)
     document_type = models.ForeignKey('DocumentType', on_delete=models.CASCADE)
     document_path = models.CharField(max_length=500)
+    id = models.AutoField(primary_key=True)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
 class LocationType(models.Model):
     name = models.CharField(max_length=100)
