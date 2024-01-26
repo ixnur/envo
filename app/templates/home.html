@@ -13,68 +13,113 @@
 </head>
 <body>
     <header>
-        <nav>
-            <a class="navbar-brand" href="{% url 'home' %}">
-                <img class="logo" src="/home/n/Desktop/logo.png" alt="OpenStockMate Logo" height="60" />
-            </a>
-            <ul class="nav-links">
-                <div class="action-buttons">
-                    <!-- Existing action buttons -->
-                </div>
-            </ul>
-        </nav>
-    </header>
-    <div class="table-container">
-        <table class="table" id="productTable">
-            <!-- Table header -->
-            <thead>
-                <!-- ... (same as your existing code) ... -->
-            </thead>
+        <button id="addcompButton">Yeni Komponent Ekle</button>
 
-            <!-- Table body -->
-            <tbody>
-                {% for component in components %}
-                <tr>
-                    <!-- Display component details -->
-                    <td>{{ component.model }}</td>
-                    <td>{{ component.description }}</td>
-                    <!-- Add other fields as needed -->
-                    <!-- ... -->
-
-                    <!-- Stok hücresi -->
-                    <td class="stock-cell">{{ component.stock }}</td>
-
-                    <!-- Document link column -->
-                    <td>
-                        {% for document_link in component.componentdocumentlink_set.all %}
-                            <a href="{{ document_link.document.document_path }}" target="_blank">{{ document_link.document.name }}</a><br />
-                        {% endfor %}
-                    </td>
-
-                    <!-- Other fields -->
-                    <!-- ... -->
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-    <!-- Add Component Popup -->
-    <div id="addcompPopup" class="popup">
-        <div class="popup-content">
-            <h2>Yeni Komponent</h2>
-            <form id="addcompForm">
-                <!-- Form fields -->
-                <label for="model">Model:</label>
-                <input type="text" id="model" name="model" required />
-                <!-- Add other input fields as needed -->
-                <!-- ... -->
-
-                <!-- Save and Cancel buttons -->
-                <button type="button" id="addcompSaveButton">Save</button>
-                <button type="button" id="addcompCancelButton">Cancel</button>
-            </form>
+        <!-- Table -->
+        <div class="table-container">
+            <table class="table" id="productTable">
+                <!-- Table header -->
+                <thead>
+                    <!-- ... (same as your existing code) ... -->
+                </thead>
+        
+                <!-- Table body -->
+                <tbody>
+                    {% for component in components %}
+                    <tr>
+                        <!-- Display component details -->
+                        <td>{{ component.model }}</td>
+                        <td>{{ component.description }}</td>
+                        <!-- Add other fields as needed -->
+                        <!-- ... -->
+        
+                        <!-- Stok hücresi -->
+                        <td class="stock-cell">{{ component.stock }}</td>
+        
+                        <!-- Document link column -->
+                        <td>
+                            {% for document_link in component.componentdocumentlink_set.all %}
+                                <a href="{{ document_link.document.document_path }}" target="_blank">{{ document_link.document.name }}</a><br />
+                            {% endfor %}
+                        </td>
+        
+                        <!-- Edit and Delete buttons -->
+                        <td>
+                            <button class="edit-button" data-component-id="{{ component.id }}">Düzenle</button>
+                            <button class="delete-button" data-component-id="{{ component.id }}">Sil</button>
+                        </td>
+        
+                        <!-- Other fields -->
+                        <!-- ... -->
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
         </div>
-    </div>
+        
+        <!-- Add Component Popup -->
+        <div id="addcompPopup" class="popup">
+            <div class="popup-content">
+                <h2>Yeni Komponent</h2>
+                <form id="addcompForm">
+                    <!-- Form fields -->
+                    <label for="model">Model:</label>
+                    <input type="text" id="model" name="model" required />
+                    <!-- Add other input fields as needed -->
+                    <!-- ... -->
+        
+                    <!-- Save and Cancel buttons -->
+                    <button type="button" id="addcompSaveButton">Kaydet</button>
+                    <button type="button" id="addcompCancelButton">İptal</button>
+                </form>
+            </div>
+        </div>
+        
+        <!-- Edit Component Popup -->
+        <div id="editcompPopup" class="popup">
+            <div class="popup-content">
+                <h2>Komponenti Düzenle</h2>
+                <form id="editcompForm">
+                    <!-- Form fields -->
+                    <label for="editModel">Model:</label>
+                    <input type="text" id="editModel" name="editModel" required />
+                    <!-- Add other input fields as needed -->
+                    <!-- ... -->
+        
+                    <!-- Save and Cancel buttons -->
+                    <button type="button" id="editcompSaveButton">Kaydet</button>
+                    <button type="button" id="editcompCancelButton">İptal</button>
+                </form>
+            </div>
+        </div>
+        <div class="table-container">
+            <table class="table" id="inventoryTable">
+                <!-- Table header -->
+                <thead>
+                    <tr>
+                        <th>Model</th>
+                        <th>Açıklama</th>
+                        <th>Stok</th>
+                        <th>Tedarikçi</th>
+                        <!-- Add other fields as needed -->
+                        <!-- ... -->
+                    </tr>
+                </thead>
+                <!-- Table body -->
+                <tbody>
+                    {% for component in components %}
+                        <tr>
+                            <td>{{ component.model }}</td>
+                            <td>{{ component.description }}</td>
+                            <td>{{ component.stock }}</td>
+                            <td>{{ component.manufacturer.name }}</td>
+                            <!-- Add other fields as needed -->
+                            <!-- ... -->
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     <footer class="footer">
         <p>&copy;2023@mekatronik.org - Open Stock Mate - Komponent envanter uygulaması.</p>
     </footer>
@@ -82,42 +127,15 @@
 </html>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        // Context menu event listener
-        document.getElementById("productTable").addEventListener("contextmenu", function (event) {
-            event.preventDefault();
-            console.log("Sağ tıklandı");
-        });
+        // ... (existing JavaScript) ...
 
-        // Stok hücrelerini kontrol etme
-        var stockCells = document.querySelectorAll(".stock-cell");
-        stockCells.forEach(function (cell) {
-            var stock = parseInt(cell.textContent);
-            if (stock < 5) {
-                cell.style.backgroundColor = "red";
-            } else if (stock < 10) {
-                cell.style.backgroundColor = "yellow";
-            }
-        });
-
-        // Add Component Pop-up
-        const addcompButton = document.getElementById("addcompButton");
-        const addcompPopup = document.getElementById("addcompPopup");
-        const addcompSaveButton = document.getElementById("addcompSaveButton");
-        const addcompCancelButton = document.getElementById("addcompCancelButton");
-
+        // Add Component Button event listener
+        var addcompButton = document.getElementById("addcompButton");
         addcompButton.addEventListener("click", function () {
             openAddcompPopup();
         });
 
-        addcompCancelButton.addEventListener("click", function () {
-            closeAddcompPopup();
-        });
-
-        addcompSaveButton.addEventListener("click", function () {
-            saveAddcompData();
-        });
-
-        // Add Component Pop-up fonksiyonları
+        // Add Component Pop-up functions
         function openAddcompPopup() {
             addcompPopup.style.display = "block";
         }
@@ -148,10 +166,66 @@
                 .then((data) => {
                     console.log(data);
                     closeAddcompPopup();
+                    // Burada bileşenleri güncellemek için gerekli işlemleri ekleyin
+                    // Örneğin: sayfayı yeniden yükleme veya AJAX ile bileşenleri güncelleme
                 })
                 .catch((error) => {
                     console.error("Error:", error);
                 });
         }
+
+        // Edit Component Pop-up functions
+        var editcompPopup = document.getElementById("editcompPopup");
+        var editcompSaveButton = document.getElementById("editcompSaveButton");
+        var editcompCancelButton = document.getElementById("editcompCancelButton");
+
+        editcompCancelButton.addEventListener("click", function () {
+            closeEditcompPopup();
+        });
+
+        editcompSaveButton.addEventListener("click", function () {
+            saveEditcompData();
+        });
+
+        function openEditcompPopup(componentId) {
+            // Fetch component details by ID and populate the edit form
+            // ...
+
+            // Open the edit pop-up
+            editcompPopup.style.display = "block";
+        }
+
+        function closeEditcompPopup() {
+            editcompPopup.style.display = "none";
+        }
+
+        function saveEditcompData() {
+            // Collect data from the edit form and update the component
+            // ...
+
+            // Close the edit pop-up
+            closeEditcompPopup();
+        }
+
+        // Delete Component function
+        function deleteComponent(componentId) {
+            // Confirm the deletion with the user (optional)
+            var confirmDelete = confirm("Bu komponenti silmek istediğinizden emin misiniz?");
+            if (confirmDelete) {
+                // Perform the deletion via AJAX or form submission
+                // ...
+            }
+        }
+
+        // Stok hücrelerini kontrol etme
+        var stockCells = document.querySelectorAll(".stock-cell");
+        stockCells.forEach(function (cell) {
+            var stock = parseInt(cell.textContent);
+            if (stock < 5) {
+                cell.style.backgroundColor = "red";
+            } else if (stock < 10) {
+                cell.style.backgroundColor = "yellow";
+            }
+        });
     });
 </script>
