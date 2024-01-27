@@ -2,6 +2,8 @@ from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
 import time
+from django.contrib.auth.models import User
+
 
 
 class Category(models.Model):
