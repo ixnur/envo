@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History View</title>
+</head>
+<body>
+    <h1>Component History</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Model</th>
+                <th>History Date</th>
+                <!-- Diğer sütunlar -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for history in component_history %}
+                <tr>
+                    <td>{{ history.history_object.model }}</td>
+                    <td>{{ history.history_date }}</td>
+                    <!-- Diğer sütunlar -->
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h1>Document History</h1>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>History Date</th>
+                <!-- Diğer sütunlar -->
+            </tr>
+        </thead>
+        <tbody>
+            {% for history in document_history %}
+                <tr>
+                    <td>{{ history.history_object.name }}</td>
+                    <td>{{ history.history_date }}</td>
+                    <!-- Diğer sütunlar -->
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Diğer modelleri de aynı şekilde ekleyebilirsiniz -->
+
+</body>
+</html>
