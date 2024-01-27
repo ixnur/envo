@@ -1,1 +1,5 @@
-pip install django-simple-history
+
+
+
+
+pip install django-simple-history 3.4.0
