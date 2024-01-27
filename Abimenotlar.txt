@@ -8,5 +8,7 @@ python3 manage.py migrate
 python manage.py createsuperuser
 
 --Şifre sıfırlama (lazım olursa)
-python manage.py changepassword <kullanıcı_adınız>
+python manage.py changepassword <kullanıcı_adı>
 
+Notlarım-
+hash ayarla formsda  

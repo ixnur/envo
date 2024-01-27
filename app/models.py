@@ -1,7 +1,8 @@
+import time
+import hashlib
 from django.db import models
 from django.urls import reverse
 from django.utils.text import slugify
-import time
 from django.contrib.auth.models import User
 from simple_history.models import HistoricalRecords
 
@@ -61,6 +62,12 @@ class Document(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     history = HistoricalRecords()
+    hash_value = models.CharField(max_length=32, unique=True)
+
+    def save(self, *args, **kwargs):
+        hash_object = hashlib.md5(self.content.read())#haslib.org diğer şifreler
+        self.hash_value = hash_object.hexdigest()
+        super().save(*args, **kwargs)
 
 class LocationType(models.Model):
     name = models.CharField(max_length=100)

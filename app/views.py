@@ -1,4 +1,3 @@
-#HTML YONLENDIRME SAYFAMIZ 
 from django.db.models import OrderBy
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import ComponentForm
@@ -44,6 +43,7 @@ def component_delete(request, slug):
 
 def component_new(request):
     if request.method == "POST":
+        component_new = Document.objects.filter(hash_value=component_new.hash_value).first()
         form = ComponentForm(request.POST)
         if form.is_valid():
             component = form.save(commit=False)
