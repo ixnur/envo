@@ -34,7 +34,7 @@ from . import uygulama
 
 sys.path.append('DOSYAYOLU')
 
-
+#güncelle
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', uygulama.settings')
 django.setup()
 
