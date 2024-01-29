@@ -1,6 +1,5 @@
 from django import forms
-from .models import Component, Document, Manufacturer, Category, Package, Location, Stock, User, Profile, Role, Permission, RolePermission, UserRole, UserPermission, UserRolePermission, UserComponent, UserDocument, UserManufacturer, UserCategory, UserPackage, UserLocation, UserStock, UserComponent, UserDocument, UserManufacturer, UserCategory,
- 
+from .models import Component, Document, Manufacturer, Category, Package, Location, 
 from django.contrib.auth.models import User
 import hashlib
 
@@ -9,8 +8,16 @@ import hashlib
 class ComponentForm(forms.ModelForm):
     class Meta:
         model = Component
-        fields = ['model', 'description', 'manufacturer', 'category', 'package', 'location', 'stock']
-                  #burda kaldım
+        fields = ['model', 'description', 'manufacturer', 'category', 'package', 'location']
+                #burda kaldım
+
+
+
+
+
+
+
+
 class DocumentForm(forms.ModelForm):
     class Meta:
         model = Document
