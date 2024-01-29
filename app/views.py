@@ -2,7 +2,9 @@ from django.db.models import OrderBy
 from django.shortcuts import render, get_object_or_404, redirect
 from .forms import ComponentForm
 from simple_history.models import HistoricalRecords
-from .models import Category, Component, Document, ComponentDocumentLink, Document, ComponentDocumentLink, DocumentType, LocationType, Location, Manufacturer, Purchase, PurchaseDetail, Supplier, StockMovement    #history ekliyorum
+from .models import Category, Component, Document, ComponentDocumentLink, Document, ComponentDocumentLink, DocumentType, LocationType, Location, Manufacturer, Purchase, PurchaseDetail, Supplier, StockMovement    
+
+#history ekliyorum
 
 def history_view(request):
     return render(request, 'history_view.html')
@@ -13,16 +15,16 @@ def home(request):
 def history_view(request):
     category_history = HistoricalRecords.objects.all().order_by('-history_date')
     component_history = HistoricalRecords.objects.all().order_by('-history_date')
-    component_document_link_history = HistoricalRecords..objects.all().order_by('-history_date') 
+    component_document_link_history = HistoricalRecords.objects.all().order_by('-history_date') 
     document_history = HistoricalRecords.objects.all().order_by('-history_date')
-    document_type_history = HistoricalRecords..objects.all().order_by('-history_date')
+    document_type_history = HistoricalRecords.objects.all().order_by('-history_date')
     location_history = HistoricalRecords.objects.all().order_by('-history_date')
-    location_type_history = HistoricalRecords..objects.all().order_by('-history_date')
-    package_history = HistoricalRecords..objects.all().order_by('-history_date')
-    purchase_history = HistoricalRecords..objects.all().order_by('-history_date')
-    purchase_detail_history = HistoricalRecords..objects.all().order_by('-history_date')
-    supplier_history = HistoricalRecords..objects.all().order_by('-history_date')
-    stock_movement_history = HistoricalRecords..objects.all().order_by('-history_date')
+    location_type_history = HistoricalRecords.objects.all().order_by('-history_date')
+    package_history = HistoricalRecords.objects.all().order_by('-history_date')
+    purchase_history = HistoricalRecords.objects.all().order_by('-history_date')
+    purchase_detail_history = HistoricalRecords.objects.all().order_by('-history_date')
+    supplier_history = HistoricalRecords.objects.all().order_by('-history_date')
+    stock_movement_history = HistoricalRecords.objects.all().order_by('-history_date')
     
     return render(request, 'history_view.html', {'component_history': component_history, 'document_history': document_history})
 
