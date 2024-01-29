@@ -8,8 +8,7 @@ import hashlib
 class ComponentForm(forms.ModelForm):
     class Meta:
         model = Component
-        fields = ['model', 'description', 'manufacturer', 'category', 'package', 'location']
-                #burda kaldım
+        fields = '__all__'
 
 
 
