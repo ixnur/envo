@@ -1,5 +1,7 @@
 from django.urls import path
 from .views import home, component_list, component_detail, component_edit, component_delete, component_new
+from . import views
+
 
 urlpatterns = [
     path('', home, name='home'),
@@ -8,4 +10,5 @@ urlpatterns = [
     path('component/<slug:slug>/edit/', component_edit, name='component_edit'),
     path('component/<slug:slug>/delete/', component_delete, name='component_delete'),
     path('component/new/', component_new, name='component_new'),
+    path('history/', views.history_view, name='history_view'),
 ]

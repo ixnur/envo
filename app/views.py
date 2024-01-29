@@ -4,6 +4,9 @@ from .forms import ComponentForm
 from simple_history.models import HistoricalRecords
 from .models import Category, Component, Document, ComponentDocumentLink, Document, ComponentDocumentLink, DocumentType, LocationType, Location, Manufacturer, Purchase, PurchaseDetail, Supplier, StockMovement    #history ekliyorum
 
+def history_view(request):
+    return render(request, 'history_view.html')
+
 def home(request):
     return render(request, 'home.html')
 
