@@ -1,3 +1,5 @@
+"""
+
 import sqlite3
 
 database_name = 'db.sqlite3'
@@ -20,3 +22,52 @@ for table in tables:
     for row in rows:
         print(row)
 connection.close()
+
+"""
+
+import os
+import sys
+import django
+from . import models
+from . import uygulama
+
+
+sys.path.append('DOSYAYOLU')
+
+
+os.environ.setdefault('DJANGO_SETTINGS_MODULE', uygulama.settings')
+django.setup()
+
+from app import models
+
+def check_database():
+    try:
+        models_list = [
+            models.Category,
+            models.ComponentDocumentLink,
+            models.Component,
+            models.DocumentType,
+            models.Document,
+            models.LocationType,
+            models.Location,
+            models.Manufacturer,
+            models.Package,
+            models.PurchaseDetail,
+            models.Purchase,
+            models.Supplier,
+            models.StockMovement,
+        ]
+
+        for model in models_list:
+            model_name = model.__name__
+            if model.objects.exists():
+                print(f"{model_name} modeli veritabanında mevcut.")
+            else:
+                print(f"{model_name} modeli veritabanında bulunamadı.")
+    except Exception as e:
+        print(f"Hata: {e}")
+if __name__ == '__main__':
+    check_database()
+
+
+#  python3 databasekontrol.py
