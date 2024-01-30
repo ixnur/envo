@@ -1,5 +1,5 @@
 from django import forms
-from .models import Component, Document, Manufacturer, Category, Package, Location, 
+from .models import Component, Document, Manufacturer, Category, Package, Location
 from django.contrib.auth.models import User
 import hashlib
 
