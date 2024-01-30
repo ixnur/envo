@@ -28,12 +28,15 @@ def veri_topla_ve_kaydet(url, dosya_adı):
 if __name__ == "__main__":
     siteler = {
         "siteler": [
+
+            "https://www.emayteknik.com",
+            "https://www.ertelgsm.com",
             "https://www.ozdisan.com/",
-            "https://www.megasan.com/"
+            "https://www.megasan.com/",
             "http://www.gamateknik.com/",
             "http://www.testone.com.tr/",
             "http://www.tdsmuhendislik.com/",
-            "http://www.tekniktest.com/"
+            "http://www.tekniktest.com/",
             "http://www.brotechelectronics.com/"
             "https://www.olcualetlerisepeti.com/"
             "https://www.kartalotomasyon.com.tr/"

@@ -115,7 +115,9 @@ if __name__ == "__main__":
             "https://openzeka.com/"
             "https://www.empastore.com/"
             "https://deneyapkart.org/"
-            "https://market.samm.com/"     
+            "https://market.samm.com/"   
+            "https://www.emayteknik.com"
+            "https://www.ertelgsm.com"  
     ]
 
     for site in siteler:
