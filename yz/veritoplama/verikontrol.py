@@ -8,7 +8,6 @@ def veri_topla_ve_kaydet(url, dosya_adı):
 
     urunler = []
 
-    # Sitenin HTML yapısına göre gerekli etiketleri belirleyin
     for urun_etiketi in soup.find_all('div', class_='urun-etiketi'):
         try:
             aa = urun_etiketi.find('h1').text.strip()
